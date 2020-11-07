@@ -1,0 +1,47 @@
+
+<div class="page-width">
+    <div class="">
+        <h3>特別な商品</h3>
+        <ul>
+            {% for block in section.blocks %}
+                <li>
+                    <p>{{ all_products[block.settings.content].title }}</p>
+                    <img src="{{ all_products[block.settings.content].featured_image.src | img_url }}">
+                </li>
+            {% endfor %}
+        </ul>
+    </div>
+    {% paginate collection.products by 2 %}
+
+        {% for product in collection.products %}
+            <div>
+                <p>{{ product.title }}</p>
+            </div>
+        {% endfor %}
+
+        {%- if paginate.pages > 1 -%}
+            {% include 'pagination', paginate: paginate %}
+        {%- endif -%}
+
+    {% endpaginate %}
+</div>
+
+
+{% schema %}
+  {
+    "blocks": [
+      {
+        "type": "product",
+        "name": "商品",
+        "settings": [
+          {
+            "id": "content",
+            "type": "product",
+            "label":     "おすすめ商品",
+            "info":      "商品選びましょう"
+          }
+        ]
+      }
+    ]
+  }
+{% endschema %}
